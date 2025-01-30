@@ -1,11 +1,11 @@
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 //TODO: Verify login in some functions
-//TODO: Fix log out and quit
 //TODO: Add password, name and insurance number checking
+//TODO: Add change name functionality
+//TODO: Add title
 
 //TODO: Add list scrolling
 
@@ -47,6 +47,10 @@ public class Account {
         return String.format("$%.2f", amount / 100.0);
     }
 
+    private String getFormattedName() {
+        return firstName + " " + lastName;
+    }
+
     public static void pause() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -54,7 +58,7 @@ public class Account {
         scanner.nextLine();
     }
 
-    public void menu() {
+    public boolean menu() {
         while(true) {
             System.out.println("-=- MENU -=-");
             System.out.println("1. View balance");
@@ -88,9 +92,9 @@ public class Account {
                     break;
                 case "5":
                     this.logout();
-                    return;
+                    return false;
                 case "q":
-                    return;
+                    return true;
                 default:
                     System.out.println("Invalid input");
                     break;
@@ -160,7 +164,7 @@ public class Account {
     }
 
     public void setID(int ID) {
-        if(this.ID != 0) {
+        if(this.ID == 0) {
             this.ID = ID;
         }
     }
@@ -206,10 +210,10 @@ public class Account {
         return false;
     }
 
-    public void login() {
+    public boolean login() {
         if (this.loginVerified) {
             System.out.println("Already logged in");
-            return;
+            return true;
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -219,7 +223,11 @@ public class Account {
 
         if (password.equals(this.password)) {
             this.loginVerified = true;
+            System.out.println("Welcome back, " + getFormattedName());
+            return true;
         }
+        System.out.println("Error: Invalid insurance number or password");
+        return false;
     }
 
     public void logout() {
@@ -274,7 +282,7 @@ public class Account {
         }
 
         System.out.println();
-        System.out.println(firstName + " " + lastName + ", welcome to Bank!");
+        System.out.println(getFormattedName() + ", welcome to Bank!");
     }
 
     private static boolean checkName(String name) {

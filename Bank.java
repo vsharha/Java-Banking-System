@@ -10,34 +10,39 @@ public class Bank {
     private int currentAccountID;
 
     public void welcome() {
-        while(true) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Welcome to Bank. Are you already a client? [Y/N] > ");
-            String answer = scanner.nextLine().toLowerCase();
-            System.out.println();
+        boolean exit;
+        do {
+            while (true) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Welcome to Bank. Are you already a client? [Y/N] > ");
+                String answer = scanner.nextLine().toLowerCase();
+                System.out.println();
 
-            if(answer.equals("y")) {
-                while(true) {
-                    if (this.login()) {
-                        break;
+                if (answer.equals("y")) {
+                    while (true) {
+                        if (this.login()) {
+                            break;
+                        }
                     }
+                    break;
+                } else if (answer.equals("n")) {
+                    this.register();
+                    break;
+                } else {
+                    System.out.println("Error: Invalid input");
                 }
-                break;
-            } else if (answer.equals("n")) {
-                this.register();
-                break;
-            } else {
-                System.out.println("Error: Invalid input");
             }
-        }
 
-        Account.pause();
+            Account.pause();
 
-        for(int i = 0; i<5; i++) {
-            System.out.println();
-        }
+            for (int i = 0; i < 5; i++) {
+                System.out.println();
+            }
 
-        this.accounts.get(this.currentAccountID).menu();
+            exit = this.accounts.get(this.currentAccountID).menu();
+
+            this.currentAccountID = 0;
+        } while (!exit);
     }
 
     private static int generateID() {
@@ -57,7 +62,6 @@ public class Bank {
 
         this.accounts.put(ID, account);
         this.currentAccountID = ID;
-        System.out.println(this.currentAccountID);
     }
 
     public boolean login() {
@@ -67,11 +71,12 @@ public class Bank {
 
         for(Account account: this.accounts.values()) {
             if(account.getInsuranceNumber().equals(insuranceNumber)) {
-                account.login();
-                if(account.getLoginStatus()) {
+                if(account.login()) {
                     this.currentAccountID = account.getID();
+
+                    return true;
                 }
-                return true;
+                return false;
             }
         }
 
