@@ -1,8 +1,11 @@
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Bank {
+    final static int lengthID = 8;
+
     private Map<Integer, Account> accounts = new HashMap<>();
     private int currentAccountID;
 
@@ -37,13 +40,24 @@ public class Bank {
         this.accounts.get(this.currentAccountID).menu();
     }
 
+    private static int generateID() {
+        SecureRandom secureRandom = new SecureRandom();
+        return (int)Math.pow(10, lengthID) + secureRandom.nextInt(9*(int)Math.pow(10, lengthID));
+    }
+
     public void register() {
         Account account = new Account();
 
-        int ID = account.register();
+        account.register();
+        int ID;
+        do {
+            ID = generateID();
+        } while (this.accounts.containsKey(ID));
+        account.setID(ID);
 
         this.accounts.put(ID, account);
         this.currentAccountID = ID;
+        System.out.println(this.currentAccountID);
     }
 
     public boolean login() {

@@ -1,21 +1,20 @@
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 //TODO: Verify login in some functions
-//TODO: Generate random IDs, make sure they are unique
 //TODO: Fix log out and quit
 //TODO: Add password, name and insurance number checking
 
 //TODO: Add list scrolling
 
-//TODO: Change ID to card number
-//TODO: give the user their id
+//TODO: Add card number
+//TODO: give the user their card number
 //TODO: add transfer functionality
 
 //TODO: Add time stamps for transactions
 
-//TODO: Use safe random generation
 //TODO: Use password hashes
 //TODO: Store data in database
 
@@ -46,10 +45,6 @@ public class Account {
 
     public static String formatAmount(int amount) {
         return String.format("$%.2f", amount / 100.0);
-    }
-
-    public static int generateID() {
-        return 1;
     }
 
     public static void pause() {
@@ -164,6 +159,12 @@ public class Account {
         return this.loginVerified;
     }
 
+    public void setID(int ID) {
+        if(this.ID != 0) {
+            this.ID = ID;
+        }
+    }
+
     public int getID() {
         return this.ID;
     }
@@ -225,10 +226,10 @@ public class Account {
         loginVerified = false;
     }
 
-    public int register() {
+    public void register() {
         if(this.ID != 0) {
             System.out.println("Error: Account already registered");
-            return this.ID;
+            return;
         }
         Scanner scanner = new Scanner(System.in);
 
@@ -272,11 +273,8 @@ public class Account {
                 break;
         }
 
-        this.ID = generateID();
-
         System.out.println();
         System.out.println(firstName + " " + lastName + ", welcome to Bank!");
-        return this.ID;
     }
 
     private static boolean checkName(String name) {
