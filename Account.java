@@ -5,6 +5,7 @@ import java.util.Scanner;
 //TODO: Verify login in some functions
 //TODO: Add password, name and insurance number checking
 //TODO: Add change name functionality
+//TODO: Add view account details section
 //TODO: Add title
 
 //TODO: Add list scrolling
@@ -114,9 +115,10 @@ public class Account {
     private void viewTransactions() {
         System.out.println("Transaction history:");
 
-        int i;
-        for(i = 0; i < transactions.size(); i++) {
-            System.out.println(i+1 + ". ");
+        int count = 0;
+        for(int i = transactions.size()-1; i >= 0; i--) {
+            count++;
+            System.out.println(count + ". ");
             int displayAmount = transactions.get(i);
             if(displayAmount < 0) {
                 displayAmount = -displayAmount;
@@ -128,7 +130,7 @@ public class Account {
             System.out.println();
         }
 
-        if (i == 0) {
+        if (count == 0) {
             System.out.println("No transactions yet");
         }
     }
