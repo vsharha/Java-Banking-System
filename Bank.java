@@ -14,9 +14,6 @@ public class Bank {
         boolean exit;
         do {
             while (true) {
-                while(true) {
-                    System.out.println(generateID());
-                }
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Welcome to Bank. Are you already a client? [Y/N] > ");
                 String answer = scanner.nextLine().toLowerCase();
