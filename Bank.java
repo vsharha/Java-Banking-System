@@ -4,7 +4,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Bank {
-    final static int lengthID = 8;
+    private static final int LENGTH_ID = 8;
+    private static final int BASE = (int)Math.pow(10, LENGTH_ID);
 
     private Map<Integer, Account> accounts = new HashMap<>();
     private int currentAccountID;
@@ -13,6 +14,9 @@ public class Bank {
         boolean exit;
         do {
             while (true) {
+                while(true) {
+                    System.out.println(generateID());
+                }
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Welcome to Bank. Are you already a client? [Y/N] > ");
                 String answer = scanner.nextLine().toLowerCase();
@@ -47,7 +51,7 @@ public class Bank {
 
     private static int generateID() {
         SecureRandom secureRandom = new SecureRandom();
-        return (int)Math.pow(10, lengthID) + secureRandom.nextInt(9*(int)Math.pow(10, lengthID));
+        return BASE + secureRandom.nextInt(9*BASE);
     }
 
     public void register() {
