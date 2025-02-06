@@ -72,7 +72,7 @@ public class Bank {
 
         Account account = getAccount(insuranceNumber);
         if(account != null) {
-            if(account.getLoginStatus()) {
+            if(account.login()) {
                 this.currentAccountID = account.getID();
 
                 return true;
