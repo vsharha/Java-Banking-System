@@ -28,7 +28,7 @@ public class Account {
     private int ID;
     private boolean loginVerified = false;
 
-    private List<Integer> transactions = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public static int readAmount() {
         Scanner scanner = new Scanner(System.in);
@@ -119,14 +119,7 @@ public class Account {
         for(int i = transactions.size()-1; i >= 0; i--) {
             count++;
             System.out.println(count + ". ");
-            int displayAmount = transactions.get(i);
-            if(displayAmount < 0) {
-                displayAmount = -displayAmount;
-                System.out.println("Withdrawal");
-            } else {
-                System.out.println("Deposit");
-            }
-            System.out.println(formatAmount(displayAmount));
+            System.out.println(transactions.get(i));
             System.out.println();
         }
 
@@ -155,7 +148,7 @@ public class Account {
         this.balance += amount;
 
         if (amount != 0) {
-            transactions.add(amount);
+            transactions.add(new Transaction(amount, this.insuranceNumber));
         }
 
         System.out.println("Your balance is now " + formatAmount(this.balance));

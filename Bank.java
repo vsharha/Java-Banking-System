@@ -70,18 +70,26 @@ public class Bank {
         System.out.print("Insurance number > ");
         String insuranceNumber = scanner.nextLine();
 
+        Account account = getAccount(insuranceNumber);
+        if(account != null) {
+            if(account.getLoginStatus()) {
+                this.currentAccountID = account.getID();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Account getAccount(String insuranceNumber) {
         for(Account account: this.accounts.values()) {
             if(account.getInsuranceNumber().equals(insuranceNumber)) {
-                if(account.login()) {
-                    this.currentAccountID = account.getID();
-
-                    return true;
-                }
-                return false;
+                return account;
             }
         }
 
         System.out.println("Error: Account not found");
-        return false;
+        return null;
     }
 }
